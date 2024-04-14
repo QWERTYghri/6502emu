@@ -55,8 +55,8 @@ to run.
 ~$ 6502emu --clock <integer in hertz>
 ```
 
-#### Show Status Each Cycle
+#### Log Cycles
 **Note**: Use this if needed to make a log of execution
 ```
-~$ 6502emu --status
+~$ 6502emu --log <log filename>
 ```

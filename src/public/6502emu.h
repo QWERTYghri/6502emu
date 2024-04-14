@@ -1,6 +1,7 @@
 /*
- * 6502 Emulator Header File
+ * 6502emu.h
  *
+ * 6502 Emulator Header File
  * File to store most of the important parts of the emulator
  */
  
