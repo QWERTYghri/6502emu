@@ -5,8 +5,8 @@
  * File to store most of the important parts of the emulator
  */
  
-#ifndef 6502_H
-#define 6502_H
+#ifndef EMU_6502_H
+#define EMU_6502_H
 
 
 
