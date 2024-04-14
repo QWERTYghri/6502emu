@@ -23,4 +23,4 @@ uninstall:
 
 # Clean compiled files
 clean:
-	-rm -fv *.out
+	-rm -fv *.out ./$(NAME)
