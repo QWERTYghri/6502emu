@@ -126,11 +126,20 @@ parseOptions ( int32_t argc, char** argv )
 	return 0;
 }
 
+/* Execute list of object files with the 6502 emulator
+static void
+executeFiles ( void )
+{
+
+}
+
 int
 main ( int argc, char** argv )
 {
 	if ( parseOptions ( argc, argv ) )
 		exit ( EXIT_SUCCESS );
+
+	executeFiles ();
 
 	closeFiles ();	
 
