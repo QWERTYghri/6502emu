@@ -61,14 +61,14 @@ parseOptions ( int32_t argc, char** argv )
 		{ "open",	required_argument, NULL, 'o' },
 		{ "address",	required_argument, NULL, 'a' },
 		{ "clock",	required_argument, NULL, 'c' },
-		{ "status",	required_argument, NULL, 's' },
+		{ "log",	required_argument, NULL, 'l' },
 		{ NULL,		0,		   NULL, 0 }
 	};
 	
 	int32_t code;
 	int32_t index = 0;
 	
-	while ( ( code = getopt_long ( argc, argv, "o:a:c:s:", commandOptions, &index ) ) != -1 )
+	while ( ( code = getopt_long ( argc, argv, "o:a:c:l:", commandOptions, &index ) ) != -1 )
 	{		
 		switch ( code )
 		{
