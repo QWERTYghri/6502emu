@@ -68,6 +68,9 @@ parseOptions ( int32_t argc, char** argv )
 	int32_t code;
 	int32_t index = 0;
 	
+	if ( argc == 1 )
+		exitMessage ( ERROR_NOARG );
+	
 	while ( ( code = getopt_long ( argc, argv, "o:a:c:l:", commandOptions, &index ) ) != -1 )
 	{		
 		switch ( code )
@@ -100,7 +103,7 @@ parseOptions ( int32_t argc, char** argv )
 				break;
 				
 			/* Specify output file name */
-			case 's':
+			case 'l':
 				if ( ( logFile = fopen ( optarg, "w+" ) ) == NULL )
 					exitMessage ( ERROR_LOGFILE );
 				
@@ -126,7 +129,7 @@ parseOptions ( int32_t argc, char** argv )
 	return 0;
 }
 
-/* Execute list of object files with the 6502 emulator
+/* Execute list of object files with the 6502 emulator */
 static void
 executeFiles ( void )
 {

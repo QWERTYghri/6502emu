@@ -8,6 +8,7 @@
 #define ERROR_NONEXISTENT ( "ERROR: Invalid Option\n" )
 #define ERROR_INVALID ( "Invalid: \"%s\"\n" )
 #define ERROR_GETOPT ( "ERROR: Argument Failed\n" )
+#define ERROR_NOARG ( "ERROR: No arguments given\n" )
 
 #define ERROR_FILE ( "ERROR: Failed to access file\n" )
 #define ERROR_LOGFILE ( "ERROR: Failed to create logfile\n" )
