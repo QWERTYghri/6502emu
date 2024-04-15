@@ -17,7 +17,7 @@ typedef int _;
 
 #define ERROR_FILE ( "ERROR: Failed to access file\n" )
 #define ERROR_LOGFILE ( "ERROR: Failed to create logfile\n" )
-#define ERROR_TOOBIG ( "ERROR: File is too big\n" )
+#define ERROR_TOOBIG ( "ERROR: File is too big, must be less than 64K\n" )
 
 #define ERROR_ADDRESS ( "ERROR: Specified address must be from 0 - 65535\n" )
 #define ERROR_CLOCK ( "ERROR: Clock speed is less than 0 hertz\n" )

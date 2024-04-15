@@ -153,8 +153,7 @@ runFile ( FILE* program )
 		processor -> memory[i + startAddress] = buffer[0];
 	}
 	
-	for ( uint64_t i = 0; i < MAX_16_BIT; i++ )
-		printf ( "%ld : %c\n", i, processor -> memory[i] );
+	
 	
 	delcpu ( processor );
 }
