@@ -145,6 +145,7 @@ runFile ( FILE* program )
 		exitMessage ( ERROR_TOOBIG );
 	}
 	
+	/* Data buffer */
 	uint8_t buffer[1];
 	
 	/* Load Data */
@@ -152,8 +153,6 @@ runFile ( FILE* program )
 		fread ( buffer, 1, 1, program );
 		processor -> memory[i + startAddress] = buffer[0];
 	}
-	
-	
 	
 	delcpu ( processor );
 }
