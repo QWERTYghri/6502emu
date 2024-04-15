@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 /* POSIX */
+#include <time.h>
 #include <getopt.h>
 
 /* Local */
@@ -129,11 +130,44 @@ parseOptions ( int32_t argc, char** argv )
 	return 0;
 }
 
+static void
+runFile ( FILE* program )
+{
+	cpu* processor = newcpu ( startAddress );
+	
+	/* Check file size and exit if file is too big */
+	fseek ( program, 0, SEEK_END );
+	uint64_t size = ftell ( program );
+	rewind ( program );
+	
+	if ( size > MAX_16_BIT ) {
+		delcpu ( processor );
+		exitMessage ( ERROR_TOOBIG );
+	}
+	
+	uint8_t buffer[1];
+	
+	/* Load Data */
+	for ( uint64_t i = 0; i < size; i++ ) {
+		fread ( buffer, 1, 1, program );
+		processor -> memory[i + startAddress] = buffer[0];
+	}
+	
+	for ( uint64_t i = 0; i < MAX_16_BIT; i++ )
+		printf ( "%ld : %c\n", i, processor -> memory[i] );
+	
+	delcpu ( processor );
+}
+
 /* Execute list of object files with the 6502 emulator */
 static void
 executeFiles ( void )
-{
-
+{	
+	for ( int32_t i = 0; i < MAX_FILEQUE; i++ )
+	{
+		if ( fileQue[i] != 0 )
+			runFile ( fileQue[i] );
+	}
 }
 
 int
@@ -142,8 +176,8 @@ main ( int argc, char** argv )
 	if ( parseOptions ( argc, argv ) )
 		exit ( EXIT_SUCCESS );
 
+	/* Execute Program */
 	executeFiles ();
-
 	closeFiles ();	
 
 	return 0;
