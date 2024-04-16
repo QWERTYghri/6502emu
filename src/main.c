@@ -154,6 +154,8 @@ runFile ( FILE* program )
 		processor -> memory[i + startAddress] = buffer[0];
 	}
 	
+	execute ( processor, 1 );
+	
 	delcpu ( processor );
 }
 

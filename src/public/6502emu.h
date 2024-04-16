@@ -15,7 +15,7 @@
 #include "./define.h"
 
 /* All instructions... */
-enum
+enum instructions
 {
 	/* ADC Instructions */
 	OP_ADC_IMM = 0x69,
@@ -279,6 +279,18 @@ enum
 	OP_TYA_IMP = 0x9A
 };
 
+enum flags
+{
+	FLAG_N,
+	FLAG_V,
+	FLAG_B,
+	FLAG_D,
+	FLAG_I,
+	FLAG_Z,
+	FLAG_C
+};
+
+/* CPU struct */
 typedef struct
 {
 	/* Memory Indexing */
@@ -286,7 +298,7 @@ typedef struct
 	uint8_t sp;
 	
 	/* Registers and status */
-	uint8_t a, x, y, status; /* *NOTE* [CZIDBON] */
+	uint8_t a, x, y, status; /* *NOTE* Status [CZIDBVN] */
 	
 	/* Memory */
 	uint8_t* memory;
@@ -302,10 +314,10 @@ void write ( cpu* processor, uint16_t address, uint8_t data );
 uint8_t read ( cpu* processor, uint16_t address );
 
 /* Fetch Data */
-uint8_t fetch ( cpu* processor, uint32_t* cycles );
+uint8_t fetch ( cpu* processor, int32_t* cycles );
 
 /* Execution */
-void execute ( cpu* processor, uint32_t cycles );
+void execute ( cpu* processor, int32_t cycles );
 
 
 #endif /* End */
