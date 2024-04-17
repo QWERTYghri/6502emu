@@ -36,6 +36,6 @@ typedef int _;
 /* Other */
 #define BASE_10 ( 10 )
 #define STATUS_TEXT ( "Status:\n\tA : $%X | X : $%X | Y : $%X\n\tSP: $%X\t\tPC : $%X\n" \
-		      "\tFLAG : $%X\tINST : $%X\n\n" )
+		      "\tFLAG : $%X\tINST : $%X\n\n\tCYCLE : %d" )
 
 #endif /* END */
