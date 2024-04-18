@@ -279,6 +279,7 @@ enum instructions
 	OP_TYA_IMP = 0x9A
 };
 
+/* *NOTE* Status [CZIDBVN] */
 enum flags
 {
 	FLAG_N,
@@ -310,12 +311,12 @@ void delcpu ( cpu* processor );
 
 /* -- CPU Data functions -- */
 /* Data Handling (No cycle decrement) */
-void write ( cpu* processor, int32_t* cycles, uint16_t address, uint8_t data );
-uint8_t read ( cpu* processor, int32_t* cycles, uint16_t address );
+void writeByte ( cpu* processor, int32_t* cycles, uint16_t address, uint8_t data );
+uint8_t readByte ( cpu* processor, int32_t* cycles, uint16_t address );
 uint16_t readWord ( cpu* processor, int32_t* cycles, uint16_t address );
 
 /* Fetch Data */
-uint8_t fetch ( cpu* processor, int32_t* cycles );
+uint8_t fetchByte ( cpu* processor, int32_t* cycles );
 uint8_t fetchWord ( cpu* processor, int32_t* cycles );
 
 /* Execution */

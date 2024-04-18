@@ -31,7 +31,6 @@ typedef int _;
 #define START_ADDRESS ( ( uint16_t) 0x1FF )
 #define CLOCK_SPEED ( 1000000 )
 #define MICROSECOND ( 1000000 )
-#define NEG_FLAG_BIT ( 0x80 )
 
 /* Other */
 #define BASE_10 ( 10 )
