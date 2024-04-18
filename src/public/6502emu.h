@@ -310,7 +310,7 @@ void delcpu ( cpu* processor );
 
 /* -- CPU Data functions -- */
 /* Data Handling (No cycle decrement) */
-void write ( cpu* processor, uint16_t address, uint8_t data );
+void write ( cpu* processor, int32_t* cycles, uint16_t address, uint8_t data );
 uint8_t read ( cpu* processor, int32_t* cycles, uint16_t address );
 uint16_t readWord ( cpu* processor, int32_t* cycles, uint16_t address );
 

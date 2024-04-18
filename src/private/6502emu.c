@@ -47,8 +47,10 @@ delcpu ( cpu* processor )
 
 /* Write to memory */
 void
-write ( cpu* processor, uint16_t address, uint8_t data )
+write ( cpu* processor, int32_t* cycles, uint16_t address, uint8_t data )
 {
+	#pragma GCC diagnostic ignored "-Wunused-value"
+	*cycles--;
 	processor -> memory[address] = data;
 }
 
@@ -104,6 +106,8 @@ fetchWord ( cpu* processor, int32_t* cycles )
 static void
 setFlag ( cpu* processor, uint8_t place, uint8_t value )
 {
+	value = ( value ) ? 1 : 0;
+
 	uint8_t* status = &processor -> status;
 	uint8_t mask = 1 << place;
 	
@@ -122,8 +126,8 @@ getFlag ( cpu* processor, uint8_t place )
 static void
 setZeroNegative ( cpu* processor, uint8_t data )
 {
-	setFlag ( processor, FLAG_Z, ( data == 0 ) ? 1 : 0 );
-	setFlag ( processor, FLAG_N, ( ( data & NEG_FLAG_BIT ) > 0 ) ? 1 : 0 );
+	setFlag ( processor, FLAG_Z, data == 0 );
+	setFlag ( processor, FLAG_N, ( data & NEG_FLAG_BIT ) > 0 );
 }
 
 /* -- Address Modes -- */
@@ -196,6 +200,7 @@ indirectY ( cpu* processor, int32_t* cycles )
 }
 
 /* Potential instructions */
+/* Data refers to data fetched in memory */
 static void
 adc ( cpu* processor, uint8_t data )
 {
@@ -207,11 +212,11 @@ adc ( cpu* processor, uint8_t data )
 	
 	processor -> a = ( sum & 0xFF );
 	setZeroNegative ( processor, processor -> a );
-	setFlag ( processor, FLAG_C, ( sum > 0xFF ) ? 1 : 0 );
+	setFlag ( processor, FLAG_C, sum > 0xFF );
 	setFlag (
 		processor,
 		FLAG_V,
-		( same && ( ( processor -> a ^ data) & NEG_FLAG_BIT ) ) ? 1 : 0
+		same && ( ( processor -> a ^ data) & NEG_FLAG_BIT )
 	);
 }
 
@@ -220,6 +225,29 @@ and ( cpu* processor, uint8_t data )
 {
 	processor -> a &= data;
 	setZeroNegative ( processor, processor -> a );
+}
+
+static uint8_t
+asl ( cpu* processor, int32_t* cycles, uint8_t data )
+{
+	setFlag ( processor, FLAG_C, ( data & getFlag ( processor, FLAG_N ) ) > 0 );
+	uint8_t result = data << 1;
+	
+	setZeroNegative ( processor, result );
+	*cycles--;
+	
+	return result;
+}
+
+static void
+aslSpecial ( cpu* processor, int32_t* cycles, uint8_t receivedData )
+{
+	uint16_t address = receivedData;
+	uint8_t operand = read ( processor, &cycles, address );
+	uint8_t result = asl ( processor, &cycles, operand );
+	
+	write ( processor, &cycles, address, result );
+	break;
 }
 
 /* Execute program in memory */
@@ -299,6 +327,26 @@ execute ( cpu* processor, int32_t cycles )
 			case OP_AND_INY:
 				and ( processor, indirectY ( processor, &cycles ) );
 				break;
+				
+			/* ASL Instruction */
+			case OP_ASL_ACC:
+				asl ( processor, &cycles, processor -> a );
+				break;
+			case OP_ASL_ZP:
+				aslSpecial ( processor, &cycles, zeroPage ( processor, &cycles ) );
+				break;
+			case OP_ASL_ZPX:
+				aslSpecial ( processor, &cycles, zeroPageX ( processor, &cycles ) );
+				break;
+			case OP_ASL_AB:
+				aslSpecial ( processor, &cycles, absolute ( processor, &cycles ) );
+				break;
+			case OP_ASL_ABX:
+				aslSpecial ( processor, &cycles, absoluteX ( processor, &cycles ) );
+				break;
+			
+			/* BCC Instruction */
+			
 		}
 		
 		/* Debug Text */
