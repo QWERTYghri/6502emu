@@ -140,6 +140,9 @@ zeroPageY ( cpu* processor, int32_t* cycles )
 	return fetchByte ( processor, cycles ) + processor -> y;
 }
 
+/* RELATIVE */
+/************/
+
 /* ABSOLUTE */
 static uint16_t
 absolute ( cpu* processor, int32_t* cycles )
@@ -159,6 +162,23 @@ static uint16_t
 absoluteY ( cpu* processor, int32_t* cycles )
 {
 	return fetchWord ( processor, cycles ) + processor -> y;
+}
+
+/* INDIRECT */
+/************/
+
+/* INDIRECT X */
+static uint16_t
+indirectX ( cpu* processor, int32_t* cycles )
+{
+	return 0;
+}
+
+/* INDIRECT Y */
+static uint16_t
+indirectY ( cpu* processor, int32_t* cycles )
+{
+	return 0;
 }
 
 /****************************************/
