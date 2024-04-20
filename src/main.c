@@ -155,7 +155,6 @@ runFile ( FILE* program )
 	}
 	
 	execute ( processor, 1 );
-	
 	delcpu ( processor );
 }
 
