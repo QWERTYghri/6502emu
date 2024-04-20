@@ -117,6 +117,17 @@ getFlag ( cpu* processor, uint8_t place )
 /* Addressing Functions */
 /* They mostly all return address values */
 
+/* Notations of this typedef
+ * describe an addressing mode that wouldn't really
+ * be useful.
+ */
+ 
+/* IMPLICIT */
+/************/
+
+/* ACCUMULATOR */
+/************/
+
 /* ZERO PAGE */
 static uint8_t
 zeroPage ( cpu* processor, int32_t* cycles )
