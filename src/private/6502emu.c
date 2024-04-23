@@ -182,15 +182,26 @@ absoluteY ( cpu* processor, int32_t* cycles )
 static uint16_t
 indirectX ( cpu* processor, int32_t* cycles )
 {
-	return 0;
+	uint8_t page = fetchByte ( processor, cycles );
+	uint16_t address = readWord ( processor, cycles, page );
+	
+	return address + processor -> y;
 }
 
 /* INDIRECT Y */
 static uint16_t
 indirectY ( cpu* processor, int32_t* cycles )
 {
-	return 0;
+	uint8_t page = fetchByte ( processor, cycles );
+	page += processor -> x;
+	*cycles--;
+	
+	return readWord ( processor, cycles, page );
 }
+
+/****************************************/
+/* Instructions */
+
 
 /****************************************/
 /* Execute program in memory */
