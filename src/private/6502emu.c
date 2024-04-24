@@ -201,7 +201,16 @@ indirectY ( cpu* processor, int32_t* cycles )
 
 /****************************************/
 /* Instructions */
-
+static void
+adcOperation ( cpu* processor, uint8_t data )
+{
+	uint16_t sum = processor -> a;
+	sum += data;
+	sum += getFlag ( processor, FLAG_C );
+	processor -> a = sum & 0xFF;
+	
+	setFlag ( processor, FLAG_C, sum > 0xFF );
+}
 
 /****************************************/
 /* Execute program in memory */
